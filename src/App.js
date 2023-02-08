@@ -1,25 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState, useMemo } from 'react';
 
 function App() {
-  return (
+
+  const [number, setNumber] = useState(0)
+  //const squaredNum =  squareNum(number); //without memo
+  // Using useMemo
+  const squaredNum = useMemo(()=> {
+    return squareNum(number);
+  }, [number])
+  const [counter, setCounter] = useState(0);
+  
+ // Change the state to the input
+  const onChangeHandler = (e) => {
+    setNumber(e.target.value);
+  }
+    
+  // Increases the counter by 1
+  const counterHander = () => {
+    setCounter(counter + 1);
+  }
+
+ return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Memo Hook</h1>
+      <input type="number" placeholder="Enter a number" 
+        value={number} onChange={onChangeHandler}>
+      </input>
+        
+      <div>OUTPUT: {squaredNum}</div>
+      <button onClick= {counterHander}>Counter ++</button>
+      <div>Counter : {counter}</div>
     </div>
   );
+}
+
+// function to square the value
+function squareNum(number){
+  console.log("Squaring will be done!");
+  return Math.pow(number, 2);
 }
 
 export default App;
